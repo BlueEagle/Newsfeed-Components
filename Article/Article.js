@@ -129,13 +129,19 @@ function articleMaker(articleData) {
   ]
   const paragraphs = paragraphData.map(paragraph => document.createElement('p'))
   const expandButton = document.createElement('span')
+  const closeButton = document.createElement('span')
 
   article.classList.add('article')
   date.classList.add('date')
   expandButton.classList.add('expandButton')
+  closeButton.classList.add('closeButton')
 
   expandButton.addEventListener('click', e => {
     article.classList.toggle('article-open')
+  })
+
+  closeButton.addEventListener('click', e => {
+    article.remove()
   })
   
   title.textContent = articleData.title
@@ -144,11 +150,13 @@ function articleMaker(articleData) {
     paragraph.textContent = paragraphData[index]
   })
   expandButton.textContent = '<<< >>>'
+  closeButton.textContent = 'CLOSE'
 
   article.appendChild(title)
   article.appendChild(date)
   paragraphs.forEach(paragraph => article.appendChild(paragraph))
   article.appendChild(expandButton)
+  article.appendChild(closeButton)
 
   return article
 }
