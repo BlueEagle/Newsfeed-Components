@@ -85,6 +85,13 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    title: 'Time Saved Refactoring Vanilla JS To React Components',
+    date: 'Jun 3rd, 2020',
+    firstParagraph: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, natus nihil. Qui magnam rem harum laboriosam architecto earum ullam, molestias maxime nobis vel vero deserunt repudiandae iusto, nemo optio. Debitis provident atque, soluta corrupti itaque unde sed eveniet magni eius minus architecto. Amet voluptatum quae aut, repellat perspiciatis officia nemo. Similique, exercitationem consectetur. Sunt obcaecati, dolorum optio debitis ducimus delectus ipsum praesentium consequuntur eveniet blanditiis pariatur, tenetur repudiandae dolor ex!',
+    secondParagraph: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, natus nihil. Qui magnam rem harum laboriosam architecto earum ullam, molestias maxime nobis vel vero deserunt repudiandae iusto, nemo optio. Debitis provident atque, soluta corrupti itaque unde sed eveniet magni eius minus architecto. Amet voluptatum quae aut, repellat perspiciatis officia nemo. Similique, exercitationem consectetur. Sunt obcaecati, dolorum optio debitis ducimus delectus ipsum praesentium consequuntur eveniet blanditiis pariatur, tenetur repudiandae dolor ex!',
+    thirdParagraph: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, natus nihil. Qui magnam rem harum laboriosam architecto earum ullam, molestias maxime nobis vel vero deserunt repudiandae iusto, nemo optio. Debitis provident atque, soluta corrupti itaque unde sed eveniet magni eius minus architecto. Amet voluptatum quae aut, repellat perspiciatis officia nemo. Similique, exercitationem consectetur. Sunt obcaecati, dolorum optio debitis ducimus delectus ipsum praesentium consequuntur eveniet blanditiis pariatur, tenetur repudiandae dolor ex!'
   }
 ];
 
@@ -111,3 +118,49 @@ const data = [
 
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 */
+function articleMaker(articleData) {
+  const article = document.createElement('div')
+  const title = document.createElement('h2')
+  const date = document.createElement('p')
+  const paragraphData = [
+    articleData.firstParagraph,
+    articleData.secondParagraph,
+    articleData.thirdParagraph
+  ]
+  const paragraphs = paragraphData.map(paragraph => document.createElement('p'))
+  const expandButton = document.createElement('span')
+  const closeButton = document.createElement('span')
+
+  article.classList.add('article')
+  date.classList.add('date')
+  expandButton.classList.add('expandButton')
+  closeButton.classList.add('closeButton')
+
+  expandButton.addEventListener('click', e => {
+    article.classList.toggle('article-open')
+  })
+
+  closeButton.addEventListener('click', e => {
+    article.remove()
+  })
+  
+  title.textContent = articleData.title
+  date.textContent = articleData.date
+  paragraphs.forEach((paragraph, index) => {
+    paragraph.textContent = paragraphData[index]
+  })
+  expandButton.textContent = '<<< >>>'
+  closeButton.textContent = 'CLOSE'
+
+  article.appendChild(title)
+  article.appendChild(date)
+  paragraphs.forEach(paragraph => article.appendChild(paragraph))
+  article.appendChild(expandButton)
+  article.appendChild(closeButton)
+
+  return article
+}
+
+const articles = data.map(article => articleMaker(article))
+articles.forEach(article => 
+  document.querySelector('.articles').appendChild(article))
